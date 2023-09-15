@@ -1,10 +1,7 @@
-import { configureStore } from '@reduxjs/toolkit';
-import dataReducer from '../reducers/dataReducer'; // Import your reducer
+import { createStore, applyMiddleware } from 'redux';
+import thunkMiddleware from 'redux-thunk';
+import rootReducer from './reducers';
 
-const store = configureStore({
-  reducer: {
-    data: dataReducer, // Add your reducer here
-  },
-});
+const store = createStore(rootReducer, applyMiddleware(thunkMiddleware));
 
 export default store;

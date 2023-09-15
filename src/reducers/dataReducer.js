@@ -1,28 +1,39 @@
-import { createSlice } from '@reduxjs/toolkit';
+import {
+  FETCH_DATA_REQUEST,
+  FETCH_DATA_SUCCESS,
+  FETCH_DATA_FAILURE,
+} from '../actions/dataActions';
 
-const dataSlice = createSlice({
-  name: 'data',
-  initialState: {
-    loading: false,
-    error: null,
-    items: [],
-  },
-  reducers: {
-    fetchDataStart: (state) => {
-      state.loading = true;
-      state.error = null;
-    },
-    fetchDataSuccess: (state, action) => {
-      state.loading = false;
-      state.items = action.payload;
-    },
-    fetchDataFailure: (state, action) => {
-      state.loading = false;
-      state.error = action.payload;
-    },
-  },
-});
+const initialState = {
+  data: [],
+  loading: false,
+  error: null,
+};
 
-export const { fetchDataStart, fetchDataSuccess, fetchDataFailure } = dataSlice.actions;
+const dataReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case FETCH_DATA_REQUEST:
+      return {
+        ...state,
+        loading: true,
+        error: null,
+      };
+    case FETCH_DATA_SUCCESS:
+      return {
+        ...state,
+        data: action.payload,
+        loading: false,
+        error: null,
+      };
+    case FETCH_DATA_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
+    default:
+      return state;
+  }
+};
 
-export default dataSlice.reducer;
+export default dataReducer;
